@@ -1,0 +1,17 @@
+---
+driver=<class 'textual.drivers.windows_driver.WindowsDriver'>
+Load() >>> MainApp(title='Textual')
+event monitor constructed
+event monitor thread started
+Mount() >>> MainApp(title='test')
+Mount() >>> DockView(name='DockView#1')
+Mount() >>> Header(name='Header#1')
+Mount() >>> View(name='left')
+view.forwarded Key(key='q')
+Key(key='q') >>> MainApp(title='test')
+ACTION MainApp(title='test') quit
+event monitor thread finished
+CLOSED MainApp(title='test')
+PROCESS END
+CLOSED DockView(name='DockView#1')
+CLOSED Header(name='Header#1')

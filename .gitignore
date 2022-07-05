@@ -1,0 +1,4 @@
+﻿# Archivos o carpetas ignorador por GIT y que no subiremos al repositorio
+__pycache__/
+.vscode/
+.git/
