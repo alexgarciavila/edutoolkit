@@ -1,6 +1,6 @@
-﻿from menu.mainmenu import MainApp
+﻿from network import NetworkModule
 
 
 if __name__ == '__main__':
 
-    MainApp.run()
+    NetworkModule.check_exist_netsh()
