@@ -38,7 +38,7 @@ class NetworkModule():
         subprocess.call("cls", shell=True)
         print("\n¿Quines DNS vols posar?")
         print("--------------------------------------------")
-        print("1. Cloudflare (1.1.1.1 - 0.0.0.0)")		
+        print("1. Cloudflare (1.1.1.1 - 1.0.0.1)")		
         print("2. Google (8.8.8.8 - 8.8.4.4)")
         print("3. OpenDNS (208.67.222.222 - 208.67.220.220)")
         print("4. DNS per DHCP")
