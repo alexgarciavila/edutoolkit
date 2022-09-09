@@ -6,17 +6,35 @@ import subprocess
 import shutil
 
 class NetworkModule():
-    def change_dns_win():
-        #os.system("netsh interface ip set dns \"Ethernet\" static 8.8.8.8")
+
+    def __init__(self):
+        osname = self.check_os()
+        if osname == "Darwin":
+            print("Sistema operatiu MAC")
+        elif osname == "Windows":
+            print("Sistema operatiu Windows")
+        elif osname == "Linux":
+            print("Sistema operatiu Linux")
+        else:
+            print("Sistema operatiu no identificat")
+
+    def check_os(self):
+        return platform.system()
+
+    def change_dns_win(self):
         subprocess.call("netsh interface ip set dns \"Ethernet\" static 8.8.8.8 primary")
         subprocess.call("netsh interface ip add dns \"Ethernet\" addr=8.8.4.4 index=2")
-    def check_exist_netsh():
+    
+    def change_dns_mac(self):
+        subprocess.call("networksetup -setdnsservers Wi-Fi 208.67.222.222")
+
+    def check_exist_netsh(self):
         if shutil.which("netsh"):
-            NetworkModule.select_dns_server()
+            self.select_dns_server()
         else:
             print("No existeix la comanda netsh")
     
-    def select_dns_server():
+    def select_dns_server(self):
         subprocess.call("cls", shell=True)
         print("\n¿Quines DNS vols posar?")
         print("--------------------------------------------")
