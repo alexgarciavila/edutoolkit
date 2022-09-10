@@ -8,11 +8,13 @@ import shutil
 class NetworkModule():
 
     def __init__(self):
+        subprocess.call("cls", shell=True)
         osname = self.check_os()
         if osname == "Darwin":
             print("Sistema operatiu MAC")
         elif osname == "Windows":
-            print("Sistema operatiu Windows")
+            print("Sistema operatiu detectat: Microsoft {0} {1} {2}" .format(platform.system(), platform.release(), platform.win32_edition()))
+            self.select_dns_server()
         elif osname == "Linux":
             print("Sistema operatiu Linux")
         else:
@@ -35,7 +37,6 @@ class NetworkModule():
             print("No existeix la comanda netsh")
     
     def select_dns_server(self):
-        subprocess.call("cls", shell=True)
         print("\n¿Quines DNS vols posar?")
         print("--------------------------------------------")
         print("1. Cloudflare (1.1.1.1 - 1.0.0.1)")		
