@@ -8,15 +8,18 @@ import shutil
 class NetworkModule():
 
     def __init__(self):
-        subprocess.call("cls", shell=True)
+        
         osname = self.check_os()
         if osname == "Darwin":
-            print("Sistema operatiu MAC")
+            print("Sistema operatiu detectat: MacOS")
         elif osname == "Windows":
-            print("Sistema operatiu detectat: Microsoft {0} {1} {2}" .format(platform.system(), platform.release(), platform.win32_edition()))
+            subprocess.call("cls", shell=True)
+            print("Sistema operatiu detectat: Microsoft {0} {1}" .format(platform.system(), platform.release()))
             self.select_dns_server()
+            self.change_dns_win()
         elif osname == "Linux":
-            print("Sistema operatiu Linux")
+            subprocess.call("clear", shell=True)
+            print("Sistema operatiu detectat: {0}" .format(platform.uname().system))
         else:
             print("Sistema operatiu no identificat")
 
@@ -24,8 +27,16 @@ class NetworkModule():
         return platform.system()
 
     def change_dns_win(self):
-        subprocess.call("netsh interface ip set dns \"Ethernet\" static 8.8.8.8 primary")
-        subprocess.call("netsh interface ip add dns \"Ethernet\" addr=8.8.4.4 index=2")
+        print("DNS Actuals:")
+        print("--------------------------------------------------")
+        subprocess.call("netsh interface ipv4 show dnsservers \"Ethernet\"")
+        print("--------------------------------------------------")
+        subprocess.call("netsh interface ip set dns \"Ethernet\" static 1.1.1.1 primary")
+        subprocess.call("netsh interface ip add dns \"Ethernet\" addr=1.0.0.1 index=2")
+        print("DNS Canviades:")
+        print("--------------------------------------------------")
+        subprocess.call("netsh interface ipv4 show dnsservers \"Ethernet\"")
+        print("--------------------------------------------------")
     
     def change_dns_mac(self):
         subprocess.call("networksetup -setdnsservers Wi-Fi 208.67.222.222")
