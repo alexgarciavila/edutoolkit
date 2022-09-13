@@ -20,7 +20,6 @@ class NetworkModule():
             subprocess.call("cls", shell=True)
             print("Sistema operatiu detectat: Microsoft {0} {1}" .format(platform.system(), platform.release()))
             self.select_dns_server()
-            self.change_dns_win()
         elif osname == "Linux":
             subprocess.call("clear", shell=True)
             print("Sistema operatiu detectat: {0}" .format(platform.uname().system))
@@ -91,3 +90,21 @@ class NetworkModule():
         print("5. DNS Manuals")
         print("--------------------------------------------")
         print("6. Cancelar\n")
+        
+        while True:
+            choice_options={
+                "1": ["CloudFlare","1.1.1.1","1.0.0.1"],
+                "2" : ["Google","8.8.8.8","8.8.4.4"],
+                "3" : ["OpenDNS","208.67.222.222","208.67.220.220"],
+                "4" : "dhcp",
+                "5" : ["Manual"],
+                "6" : ["Cancelar"]
+                }
+        
+            choice = input("Selecciona l'opció desitjada [1-6]")
+            print("Ha seleccionat: ", choice_options[choice][0])
+            print("DNS Primaria: ", choice_options[choice][1])
+            print("DNS Secundaria: ", choice_options[choice][2])
+            input("Pause..............")
+        
+        self.change_dns_win()
