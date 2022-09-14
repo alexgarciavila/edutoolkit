@@ -2,33 +2,39 @@ import os
 import ctypes
 import platform
 import sys
-import re
-#import wmi
-import time
 import subprocess
 import shutil
 
 class NetworkModule():
 
     def __init__(self):
-        
+        self.clear_screen()
         self.check_admin()
         osname = self.check_os()
         if osname == "Darwin":
-            print("Sistema operatiu detectat: MacOS")
+            self.clear_screen()
+            print("\nSistema operatiu detectat: MacOS\n")
         elif osname == "Windows":
-            subprocess.call("cls", shell=True)
-            print("Sistema operatiu detectat: Microsoft {0} {1}" .format(platform.system(), platform.release()))
+            self.clear_screen()
+            print("\nSistema operatiu detectat: Microsoft {0} {1}\n" .format(platform.system(), platform.release()))
             self.select_dns_server()
         elif osname == "Linux":
-            subprocess.call("clear", shell=True)
-            print("Sistema operatiu detectat: {0}" .format(platform.uname().system))
+            self.clear_screen()
+            print("\nSistema operatiu detectat: {0}\n" .format(platform.uname().system))
         else:
-            print("Sistema operatiu no identificat")
+            self.clear_screen()
+            print("\nSistema operatiu no identificat\n")
 
     def check_os(self):
         return platform.system()
 
+    def clear_screen(self):
+        try:
+            #Linux
+            subprocess.call("clear", shell=True)
+        except AttributeError:
+            #Windows
+            subprocess.call("cls", shell=True)
     def check_admin(self):
         try:
             # Linux
@@ -37,11 +43,11 @@ class NetworkModule():
             # Windows
             is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
         if (is_admin == False):
-            subprocess.call("cls", shell=True)
+            self.clear_screen()
+            print("\n------------------------------------------------------")
             print ("Executa el programa amb drets d'Administrador. Gràcies")
+            print("------------------------------------------------------\n")
             sys.exit()
-
-
 
     def change_dns_win(self):
         print("DNS Actuals:")
