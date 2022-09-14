@@ -8,46 +8,24 @@ import shutil
 class NetworkModule():
 
     def __init__(self):
-        self.clear_screen()
-        self.check_admin()
-        osname = self.check_os()
+        
+        utils = UtilsModule()
+        osname = utils.check_os()
+        utils.check_admin(osname)
+        
         if osname == "Darwin":
-            self.clear_screen()
+            utils.clear_screen(osname)
             print("\nSistema operatiu detectat: MacOS\n")
         elif osname == "Windows":
-            self.clear_screen()
+            utils.clear_screen(osname)
             print("\nSistema operatiu detectat: Microsoft {0} {1}\n" .format(platform.system(), platform.release()))
-            self.select_dns_server()
+            self.select_dns_server(osname)
         elif osname == "Linux":
-            self.clear_screen()
+            utils.clear_screen(osname)
             print("\nSistema operatiu detectat: {0}\n" .format(platform.uname().system))
         else:
-            self.clear_screen()
+            utils.clear_screen(osname)
             print("\nSistema operatiu no identificat\n")
-
-    def check_os(self):
-        return platform.system()
-
-    def clear_screen(self):
-        try:
-            #Linux
-            subprocess.call("clear", shell=True)
-        except AttributeError:
-            #Windows
-            subprocess.call("cls", shell=True)
-    def check_admin(self):
-        try:
-            # Linux
-            is_admin = os.getuid() == 0
-        except AttributeError:
-            # Windows
-            is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
-        if (is_admin == False):
-            self.clear_screen()
-            print("\n------------------------------------------------------")
-            print ("Executa el programa amb drets d'Administrador. Gràcies")
-            print("------------------------------------------------------\n")
-            sys.exit()
 
     def change_dns_win(self):
         print("DNS Actuals:")
@@ -114,3 +92,32 @@ class NetworkModule():
             input("Pause..............")
         
         self.change_dns_win()
+
+class UtilsModule():
+
+    def check_os(self):
+        return platform.system()
+
+    def clear_screen(self, osname):
+        if osname == "Linux":
+            subprocess.call("clear", shell=True)
+        elif osname == "Windows":
+            subprocess.call("cls", shell=True)
+        elif osname == "Darwin":
+            subprocess.call("clear", shell=True)
+
+    def check_admin(self, osname):
+        if osname == "Linux":
+            print("linux")
+            is_admin = os.getuid() == 0
+        elif osname == "Windows":
+            is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
+        elif osname == "Darwin":
+            print("MacOS")
+        
+        if (is_admin == False):
+            self.clear_screen(osname)
+            print("\n------------------------------------------------------")
+            print ("Executa el programa amb drets d'Administrador. Gràcies")
+            print("------------------------------------------------------\n")
+            sys.exit()
