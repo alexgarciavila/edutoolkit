@@ -107,13 +107,11 @@ class UtilsModule():
             subprocess.call("clear", shell=True)
 
     def check_admin(self, osname):
-        if osname == "Linux":
-            print("linux")
-            is_admin = os.getuid() == 0
-        elif osname == "Windows":
+        if osname == "Windows":
             is_admin = ctypes.windll.shell32.IsUserAnAdmin() != 0
-        elif osname == "Darwin":
-            print("MacOS")
+        else:
+        #Linux or MacOS
+            is_admin = os.getuid() == 0
         
         if (is_admin == False):
             self.clear_screen(osname)
