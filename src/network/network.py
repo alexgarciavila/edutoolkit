@@ -12,20 +12,18 @@ class NetworkModule():
         utils = UtilsModule()
         osname = utils.check_os()
         utils.check_admin(osname)
-        
-        if osname == "Darwin":
-            utils.clear_screen(osname)
+        utils.clear_screen(osname)
+
+        if (osname == "Darwin"):
             print("\nSistema operatiu detectat: MacOS\n")
-        elif osname == "Windows":
-            utils.clear_screen(osname)
+        elif (osname == "Windows"):
             print("\nSistema operatiu detectat: Microsoft {0} {1}\n" .format(platform.system(), platform.release()))
-            self.select_dns_server(osname)
         elif osname == "Linux":
-            utils.clear_screen(osname)
             print("\nSistema operatiu detectat: {0}\n" .format(platform.uname().system))
         else:
-            utils.clear_screen(osname)
             print("\nSistema operatiu no identificat\n")
+        
+        self.select_dns_server(osname)
 
     def change_dns_win(self):
         print("DNS Actuals:")
@@ -49,9 +47,9 @@ class NetworkModule():
         dns2 = lines[23][-8:]
         print(dns2)
         print("--------")
-        self.clearing_dns_cache()
+        self.clearing_dns_cache_win()
     
-    def clearing_dns_cache(self):
+    def clearing_dns_cache_win(self):
         print("Buidant la memòria cau de les DNS")
         subprocess.call("ipconfig /flushdns")
     
@@ -64,7 +62,8 @@ class NetworkModule():
         else:
             print("No existeix la comanda netsh")
     
-    def select_dns_server(self):
+    def select_dns_server(self, osname):
+        print(osname)
         print("\n¿Quines DNS vols posar?")
         print("--------------------------------------------")
         print("1. Cloudflare (1.1.1.1 - 1.0.0.1)")		
@@ -91,7 +90,7 @@ class NetworkModule():
             print("DNS Secundaria: ", choice_options[choice][2])
             input("Pause..............")
         
-        self.change_dns_win()
+        #self.change_dns_win()
 
 class UtilsModule():
 
