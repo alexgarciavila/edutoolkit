@@ -29,11 +29,11 @@ class NetworkModule():
     def change_dns_windows(self, choice_options, choice):
         print("   DNS Actuals:")
         print("   ---------------")
-        ipconfigall = subprocess.check_output('ipconfig /all').decode(sys.stdout.encoding)
+        ipconfigall = subprocess.check_output('ipconfig /all', text=True)
         lines = ipconfigall.split("\n")
-        primary_dns = "   " + lines[22][-16:]
+        primary_dns = "   " + lines[22][-15:]
         print(primary_dns)
-        secondary_dns = "   " + lines[23][-16:]
+        secondary_dns = "   " + lines[23][-15:]
         print(secondary_dns)
         print("   ---------------\n")
         print("   - Canviant les DNS...")
@@ -41,11 +41,11 @@ class NetworkModule():
         subprocess.call("netsh interface ip add dns \"Ethernet\" addr=" + choice_options[choice][2] + " index=2", stdout=False)
         print("\n   Noves DNS:")
         print("   ---------------")
-        ipconfigall = subprocess.check_output('ipconfig /all').decode(sys.stdout.encoding)
+        ipconfigall = subprocess.check_output('ipconfig /all', text=True)
         lines = ipconfigall.split("\n")
-        primary_dns = "   " + lines[22][-16:]
+        primary_dns = "   " + lines[22][-15:]
         print(primary_dns)
-        secondary_dns = "   " + lines[23][-16:]
+        secondary_dns = "   " + lines[23][-15:]
         print(secondary_dns)
         print("   ---------------\n")
         self.clearing_dns_cache_windows()
@@ -134,4 +134,5 @@ class UtilsModule():
 
     def exit_program(self):
         print("\n   Que la força t'acompanyi...\n\n")
+        input("   Prem qualsevol tecla per tancar el programa")
         sys.exit()
