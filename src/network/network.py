@@ -24,35 +24,39 @@ class NetworkModule():
             print("\nSistema operatiu no identificat\n")
         
         self.select_dns_server(osname, utils)
+        utils.exit_program()
 
     def change_dns_windows(self, choice_options, choice):
-        print("DNS Actuals:")
-        print("--------")
+        print("   DNS Actuals:")
+        print("   ---------------")
         ipconfigall = subprocess.check_output('ipconfig /all').decode(sys.stdout.encoding)
         lines = ipconfigall.split("\n")
-        primary_dns = lines[22][-8:]
+        primary_dns = "   " + lines[22][-16:]
         print(primary_dns)
-        secondary_dns = lines[23][-8:]
+        secondary_dns = "   " + lines[23][-16:]
         print(secondary_dns)
-        print("--------")
-        print("Canviant les DNS...")
-        input("Pause............")
-        subprocess.call("netsh interface ip set dns \"Ethernet\" static 1.1.1.1 primary")
-        subprocess.call("netsh interface ip add dns \"Ethernet\" addr=1.0.0.1 index=2")
-        print("DNS Canviades:")
-        print("--------")
+        print("   ---------------\n")
+        print("   - Canviant les DNS...")
+        subprocess.call("netsh interface ip set dns \"Ethernet\" static " + choice_options[choice][1] + " primary", stdout=False)
+        subprocess.call("netsh interface ip add dns \"Ethernet\" addr=" + choice_options[choice][2] + " index=2", stdout=False)
+        print("\n   Noves DNS:")
+        print("   ---------------")
         ipconfigall = subprocess.check_output('ipconfig /all').decode(sys.stdout.encoding)
         lines = ipconfigall.split("\n")
-        dns1 = lines[22][-8:]
-        print(dns1)
-        dns2 = lines[23][-8:]
-        print(dns2)
-        print("--------")
+        primary_dns = "   " + lines[22][-16:]
+        print(primary_dns)
+        secondary_dns = "   " + lines[23][-16:]
+        print(secondary_dns)
+        print("   ---------------\n")
         self.clearing_dns_cache_windows()
     
     def clearing_dns_cache_windows(self):
-        print("    Buidant la memòria cau de les DNS")
-        subprocess.call("ipconfig /flushdns")
+        print("   - Buidant la memòria cau de les DNS\n")
+        try:
+            subprocess.call("ipconfig /flushdns", stdout=subprocess.DEVNULL)
+            print("   - Memòria cau buidada correctament\n")
+        except:
+            print("   - Error en buidar la memòria cau\n")
     
     def change_dns_mac(self):
         subprocess.call("networksetup -setdnsservers Wi-Fi 208.67.222.222")
@@ -101,10 +105,6 @@ class NetworkModule():
             eval(choice_options[choice][3] + "()")
         else:   
             eval(choice_options[choice][3] + "(choice_options, choice)")
-        
-        input("Pause..............")
-        
-        #self.change_dns_win()
 
 class UtilsModule():
 
