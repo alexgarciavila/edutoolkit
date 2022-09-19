@@ -17,7 +17,7 @@ class NetworkModule():
         if (osname == "Darwin"):
             print("\nSistema operatiu detectat: MacOS\n")
         elif (osname == "Windows"):
-            print("\nSistema operatiu detectat: Microsoft {0} {1}\n" .format(platform.system(), platform.release()))
+            print("\nSistema operatiu detectat: Microsoft {0}\n" .format(platform.system()))
         elif osname == "Linux":
             print("\nSistema operatiu detectat: {0}\n" .format(platform.uname().system))
         else:
