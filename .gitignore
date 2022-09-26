@@ -2,5 +2,7 @@
 __pycache__/
 .vscode/
 .git/
+build/
+*.spec
 test.log
 EduToolkit.spec
